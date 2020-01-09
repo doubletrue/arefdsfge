@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+	<script type="text/javascript" src="./qrcode.min.js"></script>
+</head>
+
+<body>
+	<div id="qrcode"></div>
+	<script>
+		function makeCode() {
+			// 中间页面，跳转到github,解决微信扫码被封
+			var _url = 'https://b2b-dream.github.io/qrcode/?url=' + (GetQueryString('url') || window.location.origin);
+			var colorDark = GetQueryString('colorDark') || '#333'
+			var colorLight = GetQueryString('colorLight') || '#fff'
+			var qrcode = new QRCode(document.getElementById("qrcode"), {
+				text: decodeURIComponent(_url),
+				width: 300,
+				height: 300,
+				colorDark: decodeURIComponent(colorDark),
+				colorLight: decodeURIComponent(colorLight),
+				correctLevel: QRCode.CorrectLevel.H
+			});
+		}
+		makeCode();
+
+		function GetQueryString(name) {
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+			var r = window.location.search.substr(1).match(reg);
+			if (r != null) return (r[2]);
+			return null;
+		}
+	</script>
+	<style>
+		body,
+		html {
+			margin: 0;
+			padding: 0;
+			width:100%;
+			height:100%;
+			overflow: hidden!important;
+		}
+
+		#qrcode img {
+			display: block;
+			width: 100%;
+			height: 100%;
+		}
+	</style>
+</body>
